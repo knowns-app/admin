@@ -1,5 +1,7 @@
 
 import React, {Component} from "react";
+import './index.css';
+
 
 class TodoList extends Component {
 
@@ -16,11 +18,11 @@ class TodoList extends Component {
         return (
 
             <div>
-                <input value= {this.state.inputValue} onChange= {this.handleInputChange.bind(this)}/> <button onClick={this.add.bind(this)}>提交</button>
-
+                <label htmlFor="insertArea">输入内容</label>
+                <input id = "insertArea" value= {this.state.inputValue} onChange= {this.handleInputChange.bind(this)}/> <button onClick={this.add.bind(this)}>提交</button>
                 <ul>
                     {
-                        this.state.list.map((item, index) => {return <li>{item}</li>})
+                        this.state.list.map((item, index) => {return <li key={index} onClick={this.handleDelete.bind(this, index)}>{item}</li>})
                     }
                 </ul>
             </div>
@@ -36,6 +38,14 @@ class TodoList extends Component {
     add(e) {
         let src = this.state.list
         src.push(this.state.inputValue)
+        this.setState({
+            list:src
+        })
+    }
+
+    handleDelete(index) {
+        let src = [...this.state.list]
+        src.splice(index)
         this.setState({
             list:src
         })
